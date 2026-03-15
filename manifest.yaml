@@ -1,0 +1,39 @@
+# 4. API SERVICE: Expõe a sua aplicação para fora do cluster K3s (NodePort)
+apiVersion: v1
+kind: Service
+metadata:
+  name: social-app-service
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30081
+  selector:
+    app: social-app
+
+---
+# 5. API DEPLOYMENT: A sua aplicação Python
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: social-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: social-app
+  template:
+    metadata:
+      labels:
+        app: social-app
+    spec:
+      containers:
+        - name: social-app
+          image:  my.private-registry.lan:5000/social-network:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              value: "mysql+pymysql://user_dana:123456@192.168.5.27:30306/dana_db"
