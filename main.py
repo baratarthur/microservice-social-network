@@ -23,9 +23,9 @@ class Post(Base):
     __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column("userId", Integer, index=True)
-    likes = Column(Integer, default=0)
-    content = Column(String(500))
+    user_id = Column("userId", Integer)
+    likes = Column("likes", Integer, default=0)
+    content = Column("content", String(500))
 
 # Cria as tabelas no banco de dados (se não existirem)
 Base.metadata.create_all(bind=engine)
