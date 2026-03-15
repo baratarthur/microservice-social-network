@@ -36,4 +36,4 @@ spec:
             - containerPort: 8080
           env:
             - name: DATABASE_URL
-              value: "mysql+pymysql://user_dana:123456@192.168.5.27:30306/dana_db"
+              value: "mysql+pymysql://user_dana:123456@192.168.5.27:30306/danadb"
