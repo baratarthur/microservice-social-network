@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from pydantic import BaseModel
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from typing import List
@@ -23,9 +23,9 @@ class Post(Base):
     __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column("userId", Integer)
+    user_id = Column("userId", Integer, nullable=False)
     likes = Column("likes", Integer, default=0)
-    content = Column("content", String(500))
+    content = Column("content", Text)
 
 # Cria as tabelas no banco de dados (se não existirem)
 Base.metadata.create_all(bind=engine)
