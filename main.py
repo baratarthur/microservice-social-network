@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from pydantic import BaseModel
-from sqlalchemy import create_engine, Column, Integer, Text
+from sqlalchemy import create_engine, Integer, Text
+from sqlalchemy.orm import sessionmaker, Session, Mapped, mapped_column, declarative_base
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
 from typing import List
 import os
 
@@ -22,10 +22,14 @@ Base = declarative_base()
 class Post(Base):
     __tablename__ = "posts"
 
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column("userId", Integer, nullable=False)
-    likes = Column("likes", Integer, default=0)
-    content = Column("content", Text)
+    # Mapped[tipo_python] = mapped_column(tipo_sqlalchemy, configurações)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    
+    # Aqui está o segredo: passamos o nome exato no banco ("userId") como primeiro argumento
+    user_id: Mapped[int] = mapped_column("userId", Integer, nullable=False) 
+    
+    likes: Mapped[int] = mapped_column(Integer, default=0)
+    content: Mapped[str] = mapped_column(Text)
 
 # Cria as tabelas no banco de dados (se não existirem)
 Base.metadata.create_all(bind=engine)
@@ -43,7 +47,6 @@ class PostResponseDTO(BaseModel):
     likes: int
     content: str
 
-    # Nova sintaxe do Pydantic V2
     model_config = {"from_attributes": True}
 
 # ==========================================
