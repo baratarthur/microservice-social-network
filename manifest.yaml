@@ -31,7 +31,7 @@ spec:
       containers:
         - name: social-app
           image:  my.private-registry.lan:5000/social-network:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
