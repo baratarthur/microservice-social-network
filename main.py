@@ -43,8 +43,8 @@ class PostResponseDTO(BaseModel):
     likes: int
     content: str
 
-    class Config:
-        orm_mode = True
+    # Nova sintaxe do Pydantic V2
+    model_config = {"from_attributes": True}
 
 # ==========================================
 # Configuração da Aplicação e Variáveis Globais
