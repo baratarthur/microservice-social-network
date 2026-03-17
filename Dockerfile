@@ -15,4 +15,4 @@ COPY main.py .
 EXPOSE 8080
 
 # Comando para iniciar o servidor Uvicorn
-CMD ["uvicorn", "main:app", "--workers", "4", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "main:app", "--workers", "1", "--host", "0.0.0.0", "--port", "8080"]
